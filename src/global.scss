@@ -35,3 +35,20 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-header {
+  position: relative; /* Ensures header stays at the top */
+  z-index: 10; /* Keeps it above other content */
+}
+
+ion-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%; /* Ensures it spans full height */
+  z-index: 100;
+}
+
+ion-content {
+  --padding-top: 0; /* Removes unnecessary padding */
+}

@@ -1,0 +1,11 @@
+ion-menu {
+  position: fixed; /* Fixes the menu to the top-left corner */
+  top: 0;
+  left: 0;
+  height: 100%; /* Ensures it spans the full height of the viewport */
+  z-index: 100; /* Keeps it above other elements */
+}
+
+.file-system-content {
+  --padding-top: 56px; /* Adjust based on your header height */
+}

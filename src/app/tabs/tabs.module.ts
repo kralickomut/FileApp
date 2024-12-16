@@ -14,7 +14,7 @@ import { TabsPage } from './tabs.page';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-      SharedModule
+    SharedModule
   ],
   declarations: [TabsPage]
 })

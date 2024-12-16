@@ -1,8 +1,16 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
+    <!-- Menu Button -->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+
+    <!-- Title -->
     <ion-title>
-      {{ title }} <!-- Dynamic title passed as an input -->
+      {{ title }}
     </ion-title>
+
+    <!-- Logout Button -->
     <ion-buttons slot="end">
       <ion-button (click)="onLogout()">
         <ion-icon name="log-out" slot="icon-only"></ion-icon>

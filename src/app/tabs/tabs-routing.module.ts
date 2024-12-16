@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'tab1', // Default child route when navigating to '/tabs'
+        redirectTo: 'tab1',
         pathMatch: 'full',
       },
     ],

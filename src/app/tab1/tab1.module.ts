@@ -15,7 +15,7 @@ import {SharedModule} from "../shared/shared.module";
     FormsModule,
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
-      SharedModule
+    SharedModule
   ],
   declarations: [Tab1Page]
 })
