@@ -1,0 +1,7 @@
+{
+  "name": "FileApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
