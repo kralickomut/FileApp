@@ -44,11 +44,22 @@ export class Tab1Page implements OnInit {
 
     // Create workspace button handler
     createWorkspace() {
-        debugger
+        if (!this.userId) {
+            console.error('User ID is not available.');
+            return;
+        }
+
         this.fileService.createFolder(`${this.userId}/`).subscribe((result) => {
             if (result.success) {
-
+                console.log('Workspace created successfully');
+                this.loadFiles(this.userId as number);
+            } else {
+                console.error('Failed to create workspace:', result);
             }
-        })
+        }, (error) => {
+            console.error('Error while creating workspace:', error);
+        });
     }
+
+
 }

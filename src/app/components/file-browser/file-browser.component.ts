@@ -1,23 +1,34 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { File } from '../../models/api-results.model';
 import { FileService } from '../../services/file.service';
 import {HistoryService} from "../../services/history.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-file-browser',
   templateUrl: './file-browser.component.html',
   styleUrls: ['./file-browser.component.scss'],
 })
-export class FileBrowserComponent implements OnChanges {
+export class FileBrowserComponent implements OnChanges, OnInit {
   @Input() fileTree: any = {};
   @Input() files: File[] = [];
   @Input() depth: number = 0; // Indentation
-  @Input() userId: number = 1; // User ID for root-level uploads
-
+  userId: string | null = null; // User ID retrieved directly here
   selectedFile: globalThis.File | null = null;
 
-  constructor(private fileService: FileService, private historyService: HistoryService, private router: Router) {}
+  constructor(private fileService: FileService, private historyService: HistoryService, private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Retrieve user ID from AuthService
+    const profile = this.authService.getUserProfile();
+    if (profile?.Id) {
+      this.userId = profile.Id;
+      console.log(`Retrieved userId: ${this.userId}`);
+    } else {
+      console.error('User ID could not be retrieved.');
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['files'] && this.files && this.files.length > 0) {
@@ -65,7 +76,7 @@ export class FileBrowserComponent implements OnChanges {
       next: (response) => {
         if (response.success) {
           console.log(`Folder created successfully: ${folderName}`);
-          this.historyService.logAction('Created Folder', finalPath, 'folder');
+          this.historyService.logAction(Number(this.userId),'Created Folder', finalPath, 'folder');
         } else {
           console.error('Failed to create folder');
         }
@@ -90,7 +101,7 @@ export class FileBrowserComponent implements OnChanges {
         next: (response) =>
         {
           console.log(`File uploaded: ${cleanPath}`, response)
-          this.historyService.logAction('Uploaded File', cleanPath, 'file');
+          this.historyService.logAction(Number(this.userId), 'Uploaded File', cleanPath, 'file');
           },
         error: (err) => console.error('File upload failed:', err),
       });
@@ -104,7 +115,7 @@ export class FileBrowserComponent implements OnChanges {
     this.fileService.deleteFile(finalPath).subscribe({
       next: (response) => {
         if (response.success) {
-          this.historyService.logAction(isFile ? 'Deleted File' : 'Deleted Folder', finalPath, isFile ? 'file' : 'folder');
+          this.historyService.logAction(Number(this.userId), isFile ? 'Deleted File' : 'Deleted Folder', finalPath, isFile ? 'file' : 'folder');
           console.log(`${isFile ? 'File' : 'Folder'} deleted successfully: ${finalPath}`);
         } else {
           console.error('Failed to delete:', response);
