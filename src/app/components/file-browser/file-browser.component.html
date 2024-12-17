@@ -12,7 +12,7 @@
       <!-- Folder Content -->
       <div slot="content">
         <ion-list>
-          <!-- Create Folder -->
+          <!-- Create New Folder -->
           <ion-item>
             <ion-button expand="block" (click)="createFolder(key)">
               <ion-icon name="create" slot="start"></ion-icon>
@@ -29,21 +29,14 @@
             </ion-button>
           </ion-item>
 
-          <!-- Existing Files -->
-          <ion-item
-            *ngFor="let subKey of objectKeys(fileTree[key])"
-            button
-            (click)="openFile(key + '/' + subKey)"
-          >
-            <ion-icon slot="start" name="document"></ion-icon>
-            <ion-label>{{ subKey }}</ion-label>
-          </ion-item>
+          <!-- Recursively Render Subfolders and Files -->
+          <app-file-browser [fileTree]="fileTree[key]"></app-file-browser>
         </ion-list>
       </div>
     </ion-accordion>
 
-    <!-- Root-Level Files -->
-    <ion-item *ngIf="isFile(fileTree[key])" button (click)="openFile(key)">
+    <!-- File at Root Level -->
+    <ion-item *ngIf="isFile(fileTree[key])" button (click)="openFile(fileTree[key].fileUrl)">
       <ion-icon slot="start" name="document"></ion-icon>
       <ion-label>{{ key }}</ion-label>
     </ion-item>

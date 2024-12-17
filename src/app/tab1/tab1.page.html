@@ -1,17 +1,17 @@
 <div id="tab1-content">
     <!-- Shared Header -->
-    <app-shared-header [title]="'Workspace'"></app-shared-header>
+    <app-shared-header [title]="'Tab 1'"></app-shared-header>
 
     <!-- Page Content -->
     <ion-content [fullscreen]="true" class="ion-padding">
         <!-- Condensed Header -->
         <ion-header collapse="condense">
             <ion-toolbar>
-                <ion-title size="large">Workspace</ion-title>
+                <ion-title size="large">Tab 1</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <!-- File System Component -->
-        <app-file-browser [fileTree]="fileTree"></app-file-browser>
+        <app-file-browser [files]="files"></app-file-browser>
     </ion-content>
 </div>
