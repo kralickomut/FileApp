@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ApiResult, Token } from '../models/api-results.model';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { Token } from '../models/api-results.model';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
+import {jwtDecode} from "jwt-decode";
+import { UserProfile } from '../models/user-profile.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private tokenKey = 'auth-token'; // Local storage key for JWT
+  private tokenKey = 'auth-token';
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private apiUrl: string = environment.apiUrl + '/Auth';
 
@@ -22,22 +24,18 @@ export class AuthService {
   login(username: string, password: string): Observable<boolean> {
     const payload = { username, password };
 
-    return this.http.post<ApiResult<Token>>(`${this.apiUrl}/Login`, payload).pipe(
-        map(response => {
-          console.log('Response from API:', response); // Log the API response
-
-          if (response && response.success && response.result?.token) {
-            const token = response.result.token;
-            localStorage.setItem(this.tokenKey, token);
+    return this.http.post<any>(`${this.apiUrl}/Login`, payload).pipe(
+        map((response) => {
+          // Check if response contains result and token
+          if (response?.result?.token) {
+            localStorage.setItem(this.tokenKey, response.result.token);
             this.loggedIn.next(true);
             return true;
-          } else {
-            console.error('Unexpected response structure:', response);
-            throw new Error('Invalid response structure');
           }
+          throw new Error('Invalid token structure');
         }),
-        catchError(err => {
-          console.error('Login error:', err);
+        catchError((error) => {
+          console.error('Login error:', error);
           return of(false); // Return false on error
         })
     );
@@ -53,7 +51,25 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  getUserProfile(): UserProfile | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken = jwtDecode<any>(token);
+        return {
+          Id: decodedToken['Id'] || '',
+          Name: decodedToken['Name'] || '',
+          Username: decodedToken['Username'] || '',
+          Exp: decodedToken['exp'] || 0,
+        } as UserProfile;
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    }
+    return null;
+  }
+
   private hasToken(): boolean {
-    return localStorage.getItem(this.tokenKey) !== null;
+    return !!this.getToken();
   }
 }

@@ -100,8 +100,6 @@ export class FileBrowserComponent implements OnChanges {
     const cleanPath = path.replace(/^Your Workspace\/?/, '').trim(); // Remove 'Your Workspace' only once
     const finalPath = `${this.userId}/${cleanPath}`;
 
-    console.log(`Deleting: ${finalPath}`); // Debug output for path verification
-
     this.fileService.deleteFile(finalPath).subscribe({
       next: (response) => {
         if (response.success) {
