@@ -18,6 +18,34 @@ ion-menu {
 }
 
 
-.ion-padding-top {
-  padding-top: 56px;
+.loading-container {
+  text-align: center;
+  margin-top: 2rem;
+
+  p {
+    margin-top: 1rem;
+    color: #666;
+  }
+}
+
+.empty-workspace {
+  text-align: center;
+  padding: 2rem;
+
+  h2 {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: #444;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .icon-large {
+    font-size: 4rem;
+    color: #488aff;
+    margin-bottom: 1rem;
+  }
 }

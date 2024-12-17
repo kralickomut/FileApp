@@ -11,13 +11,6 @@
       </ion-toolbar>
     </ion-header>
 
-    <!-- Delete History Button -->
-    <div *ngIf="actionHistory.length">
-      <ion-button expand="block" color="danger" (click)="deleteHistory()">
-        <ion-icon name="trash-outline" slot="start"></ion-icon>
-        Delete All History
-      </ion-button>
-    </div>
 
     <!-- Action History List -->
     <ion-list>
@@ -47,6 +40,14 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+
+    <!-- Delete History Button -->
+    <div *ngIf="actionHistory.length">
+      <ion-button expand="block" color="danger" (click)="deleteHistory()">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Delete All History
+      </ion-button>
+    </div>
 
     <!-- Empty State -->
     <div *ngIf="!actionHistory.length" class="empty-state">

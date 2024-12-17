@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiResult, File as AppFile } from '../models/api-results.model'; // Alias your custom File
@@ -15,11 +15,18 @@ export class FileService {
   listUserFiles(userId: number): Observable<ApiResult<AppFile[]>> {
     const token = localStorage.getItem('auth-token'); // Retrieve token from storage
 
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('_ts', new Date().getTime().toString()); // Cache-busting parameter
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`, // Add Bearer token
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      Expires: '0',
     });
 
-    return this.http.get<ApiResult<AppFile[]>>(`${this.apiUrl}/List?userId=${userId}`, { headers });
+    return this.http.get<ApiResult<AppFile[]>>(`${this.apiUrl}/List`, { headers, params });
   }
 
   uploadFile(file: globalThis.File, path: string): Observable<string> {
@@ -55,6 +62,8 @@ export class FileService {
 
     return this.http.post<ApiResult<boolean>>(`${this.apiUrl}/CreateFolder`, JSON.stringify(path), { headers });
   }
+
+
 
 }
 

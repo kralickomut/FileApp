@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,10 +7,17 @@ import { Router } from '@angular/router';
   templateUrl: './shared-header.component.html',
   styleUrls: ['./shared-header.component.scss'],
 })
-export class SharedHeaderComponent {
+export class SharedHeaderComponent implements OnInit{
   @Input() title: string = ''; // Input for dynamic title
+  isLogged: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLogged = loggedIn;
+    });
+  }
 
   onLogout() {
     this.authService.logout();

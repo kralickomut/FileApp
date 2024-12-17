@@ -17,6 +17,10 @@ const routes: Routes = [
     path: 'file-viewer',
     loadChildren: () => import('./file-viewer/file-viewer.module').then( m => m.FileViewerPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   }
 ];
 
