@@ -1,0 +1,60 @@
+.file-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+
+  ion-card {
+    width: 100%;
+    max-width: 600px; // Adjust card size
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+
+    ion-card-title {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .file-path {
+      text-align: center;
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .responsive-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.no-file-container {
+  text-align: center;
+  color: #666;
+
+  .no-file-icon {
+    font-size: 3rem;
+    color: #ff6347; /* Tomato color for alert */
+  }
+
+  .no-file-text {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .close-button {
+    margin-top: 2rem;
+    width: 90%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -13,6 +13,11 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard], // Protect the tabs route
   },
+  {
+    path: 'file-viewer',
+    loadChildren: () => import('./file-viewer/file-viewer.module').then( m => m.FileViewerPageModule),
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

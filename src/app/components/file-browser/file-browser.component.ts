@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { File } from '../../models/api-results.model';
 import { FileService } from '../../services/file.service';
 import {HistoryService} from "../../services/history.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-file-browser',
@@ -16,7 +17,7 @@ export class FileBrowserComponent implements OnChanges {
 
   selectedFile: globalThis.File | null = null;
 
-  constructor(private fileService: FileService, private historyService: HistoryService) {}
+  constructor(private fileService: FileService, private historyService: HistoryService, private router: Router) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['files'] && this.files && this.files.length > 0) {
@@ -116,8 +117,7 @@ export class FileBrowserComponent implements OnChanges {
   }
 
   openFile(fileUrl: string) {
-    console.log(`Opening file: ${fileUrl}`);
-    window.open(fileUrl, '_blank');
+    this.router.navigate(['/file-viewer'], { queryParams: { file: fileUrl } });
   }
 
   isFile(node: any): boolean {

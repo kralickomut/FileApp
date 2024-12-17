@@ -1,0 +1,64 @@
+<div id="file-viewer">
+  <!-- Shared Header -->
+  <app-shared-header [title]="'File Viewer'"></app-shared-header>
+
+  <ion-content [fullscreen]="true" class="ion-padding">
+    <!-- Condensed Header -->
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">File Viewer</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <!-- File Viewer Content -->
+    <div class="file-container" *ngIf="filePath; else noFile">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Displaying File</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="file-path">
+            <p>{{ fileName }}</p>
+          </div>
+
+          <!-- Conditional Rendering Based on File Type -->
+          <!-- Image Viewer -->
+          <img *ngIf="isImageFile(fileName)" [src]="filePath" alt="Image File" class="responsive-img" />
+
+          <!-- PDF Viewer -->
+            <iframe
+              *ngIf="isPdfFile(fileName)"
+              [src]="safeFileUrl"
+              width="100%"
+              height="500px"
+              class="pdf-viewer"
+            ></iframe>
+
+          <!-- Text File Viewer -->
+          <pre *ngIf="isTextFile(fileName)" class="text-file-viewer">{{ fileContent }}</pre>
+
+          <!-- Unsupported File Fallback -->
+          <p *ngIf="!isImageFile(fileName) && !isPdfFile(fileName) && !isTextFile(fileName)">
+            File format not supported for preview.
+            <a [href]="filePath" target="_blank">Download File</a>
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- No File to Display -->
+    <ng-template #noFile>
+      <div class="no-file-container">
+        <ion-icon name="alert-circle-outline" class="no-file-icon"></ion-icon>
+        <p class="no-file-text">No file to display.</p>
+      </div>
+    </ng-template>
+
+    <div class="close-button">
+      <ion-button expand="block" color="primary" (click)="closeView()">
+        Close Viewer
+      </ion-button>
+    </div>
+  </ion-content>
+</div>
