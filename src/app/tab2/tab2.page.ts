@@ -1,19 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { HistoryService, HistoryEntry } from '../services/history.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: './tab2.page.html',
   styleUrls: ['./tab2.page.scss'],
 })
-export class Tab2Page implements OnInit, OnDestroy {
-  constructor(private menuCtrl: MenuController) {}
+export class Tab2Page implements OnInit {
+  actionHistory: HistoryEntry[] = [];
+
+  constructor(private historyService: HistoryService) {}
 
   ngOnInit() {
-    this.menuCtrl.enable(true, 'tab2-menu'); // Enable menu for Tab 2
+    this.loadHistory();
   }
 
-  ngOnDestroy() {
-    this.menuCtrl.enable(false, 'tab2-menu'); // Disable menu when leaving
+  async loadHistory() {
+    this.actionHistory = await this.historyService.getHistory();
+  }
+
+  formatDate(timestamp: string): string {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  }
+
+  async deleteHistory() {
+    await this.historyService.clearHistory();
+    this.actionHistory = [];
+  }
+
+  async deleteItem(index: number) {
+    this.actionHistory.splice(index, 1); // Remove the item from the array
+    await this.historyService.setHistory(this.actionHistory); // Update persistent storage
   }
 }

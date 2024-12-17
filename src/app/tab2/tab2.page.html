@@ -1,16 +1,57 @@
-
-<!-- Main Content for Tab 1 -->
 <div id="tab2-content">
-    <!-- Shared Header -->
-    <app-shared-header [title]="'Tab 1'"></app-shared-header>
+  <!-- Shared Header -->
+  <app-shared-header [title]="'Action History'"></app-shared-header>
 
-    <ion-content [fullscreen]="true">
-        <ion-header collapse="condense">
-            <ion-toolbar>
-                <ion-title size="large">Tab jedna</ion-title>
-            </ion-toolbar>
-        </ion-header>
+  <!-- Page Content -->
+  <ion-content [fullscreen]="true" class="ion-padding">
+    <!-- Condensed Header -->
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Action History</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-        <app-explore-container name="Tab 1 page"></app-explore-container>
-    </ion-content>
+    <!-- Delete History Button -->
+    <div *ngIf="actionHistory.length">
+      <ion-button expand="block" color="danger" (click)="deleteHistory()">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Delete All History
+      </ion-button>
+    </div>
+
+    <!-- Action History List -->
+    <ion-list>
+      <ion-item-sliding *ngFor="let entry of actionHistory; let i = index">
+        <!-- Action Item -->
+        <ion-item>
+          <!-- Icon for Folder or File -->
+          <ion-icon
+            slot="start"
+            [name]="entry.type === 'folder' ? 'folder-outline' : 'document-outline'">
+          </ion-icon>
+
+          <!-- Action Description -->
+          <ion-label>
+            <h2>{{ entry.action }}</h2>
+            <p>{{ entry.target }}</p>
+            <p>{{ formatDate(entry.timestamp) }}</p>
+          </ion-label>
+        </ion-item>
+
+        <!-- Sliding Options -->
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteItem(i)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            Delete
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <!-- Empty State -->
+    <div *ngIf="!actionHistory.length" class="empty-state">
+      <ion-icon name="time-outline" size="large" class="empty-icon"></ion-icon>
+      <p class="empty-text">No actions have been recorded yet.</p>
+    </div>
+  </ion-content>
 </div>

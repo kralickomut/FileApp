@@ -9,3 +9,12 @@ ion-icon {
 input[type='file'] {
   margin-top: 10px;
 }
+
+ion-icon.folder-icon {
+  color: var(--folder-icon-color);
+}
+
+
+ion-icon.file-icon {
+  color: var(--file-icon-color);
+}

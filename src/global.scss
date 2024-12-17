@@ -52,3 +52,9 @@ ion-menu {
 ion-content {
   --padding-top: 0; /* Removes unnecessary padding */
 }
+
+/* Custom folder icon color */
+:root {
+  --folder-icon-color: #e8d164;
+  --file-icon-color: #a8dbef;
+}

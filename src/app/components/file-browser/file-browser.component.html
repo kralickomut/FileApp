@@ -1,44 +1,69 @@
 <ion-accordion-group>
-  <!-- Iterate through the file tree -->
   <ng-container *ngFor="let key of objectKeys(fileTree)">
     <!-- Folder -->
     <ion-accordion *ngIf="!isFile(fileTree[key])" [value]="key">
-      <!-- Folder Header -->
-      <ion-item slot="header">
-        <ion-icon slot="start" name="folder"></ion-icon>
+      <ion-item slot="header" [style.padding-left.px]="depth * 20">
+        <ion-icon slot="start" name="folder" class="folder-icon"></ion-icon>
         <ion-label>{{ key }}</ion-label>
+
+        <!-- Actions Toolbar -->
+        <ion-buttons slot="end">
+          <!-- Create Folder -->
+          <ion-button (click)="createFolder(key)">
+            <ion-icon slot="icon-only" name="create-outline" title="Add Folder"></ion-icon>
+          </ion-button>
+
+          <!-- Upload File -->
+          <ion-button (click)="triggerFileInput(key)">
+            <ion-icon slot="icon-only" name="cloud-upload-outline" title="Upload File"></ion-icon>
+          </ion-button>
+
+          <!-- Delete Folder -->
+          <ion-button (click)="deleteItem(key, false)">
+            <ion-icon slot="icon-only" name="trash-outline" title="Delete Folder"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
 
       <!-- Folder Content -->
       <div slot="content">
-        <ion-list>
-          <!-- Create New Folder -->
-          <ion-item>
-            <ion-button expand="block" (click)="createFolder(key)">
-              <ion-icon name="create" slot="start"></ion-icon>
-              Create New Folder
-            </ion-button>
-          </ion-item>
-
-          <!-- Upload File -->
-          <ion-item>
-            <input type="file" (change)="onFileSelected($event, key)" />
-            <ion-button expand="block" (click)="uploadFile(key)">
-              <ion-icon name="cloud-upload" slot="start"></ion-icon>
-              Upload File
-            </ion-button>
-          </ion-item>
-
-          <!-- Recursively Render Subfolders and Files -->
-          <app-file-browser [fileTree]="fileTree[key]"></app-file-browser>
-        </ion-list>
+        <!-- Hidden File Input -->
+        <input
+          type="file"
+          [id]="'file-input-' + key"
+          style="display: none"
+          (change)="onFileSelected($event, key)"
+        />
+        <!-- Recursive Rendering -->
+        <app-file-browser
+          [fileTree]="fileTree[key]"
+          [depth]="depth + 1"
+          [userId]="userId"
+        ></app-file-browser>
       </div>
     </ion-accordion>
 
-    <!-- File at Root Level -->
-    <ion-item *ngIf="isFile(fileTree[key])" button (click)="openFile(fileTree[key].fileUrl)">
-      <ion-icon slot="start" name="document"></ion-icon>
+    <!-- File -->
+    <ion-item
+      *ngIf="isFile(fileTree[key])"
+      button
+      [style.padding-left.px]="depth * 20"
+    >
+      <ion-icon slot="start" name="document" class="file-icon"></ion-icon>
       <ion-label>{{ key }}</ion-label>
+
+      <!-- File Actions -->
+      <ion-buttons slot="end">
+        <!-- Open File -->
+        <ion-button (click)="openFile(fileTree[key].fileUrl)">
+          <ion-icon slot="icon-only" name="eye-outline" title="Open File"></ion-icon>
+        </ion-button>
+
+        <!-- Delete File -->
+        <ion-button (click)="deleteItem(fileTree[key].fileName, true)">
+          <ion-icon slot="icon-only" name="trash-outline" title="Delete File"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ng-container>
 </ion-accordion-group>
