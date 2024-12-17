@@ -5,6 +5,7 @@ import { SharedHeaderComponent } from '../components/shared-header/shared-header
 import {RouterLink} from "@angular/router";
 import {SharedMenuComponent} from "../components/shared-menu/shared-menu.component";
 
+
 @NgModule({
   declarations: [SharedHeaderComponent, SharedMenuComponent],
   imports: [CommonModule, IonicModule, RouterLink],

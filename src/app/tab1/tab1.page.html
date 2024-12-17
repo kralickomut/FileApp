@@ -1,59 +1,17 @@
-<!-- Main Content Wrapper -->
 <div id="tab1-content">
     <!-- Shared Header -->
-    <app-shared-header [title]="'Tab 1'"></app-shared-header>
+    <app-shared-header [title]="'Workspace'"></app-shared-header>
 
     <!-- Page Content -->
-    <ion-content [fullscreen]="true" class="file-system-content">
-        <!-- Collapsible Header -->
+    <ion-content [fullscreen]="true" class="ion-padding">
+        <!-- Condensed Header -->
         <ion-header collapse="condense">
             <ion-toolbar>
-                <ion-title size="large">Tab 1</ion-title>
+                <ion-title size="large">Workspace</ion-title>
             </ion-toolbar>
         </ion-header>
 
-        <!-- Explore Container -->
-        <app-explore-container name="Tab 1 page"></app-explore-container>
-
-        <!-- File System UI using ion-accordion -->
-        <ion-accordion-group>
-            <!-- Folder 1 -->
-            <ion-accordion value="folder1">
-                <!-- Folder Header -->
-                <ion-item slot="header">
-                    <ion-icon slot="start" name="folder"></ion-icon>
-                    <ion-label>Folder 1</ion-label>
-                </ion-item>
-
-                <!-- Folder Content -->
-                <div slot="content">
-                    <!-- Actions -->
-                    <ion-list>
-                        <!-- Create Folder -->
-                        <ion-item>
-                            <ion-button expand="block" (click)="createFolder('Folder 1')">
-                                <ion-icon name="create" slot="start"></ion-icon>
-                                Create New Folder
-                            </ion-button>
-                        </ion-item>
-
-                        <!-- Upload File -->
-                        <ion-item>
-                            <input type="file" (change)="onFileSelected($event, 'Folder 1')" />
-                            <ion-button expand="block" (click)="uploadFile('Folder 1')">
-                                <ion-icon name="cloud-upload" slot="start"></ion-icon>
-                                Upload File
-                            </ion-button>
-                        </ion-item>
-
-                        <!-- Existing Files -->
-                        <ion-item button (click)="openFile('Folder 1/File 1-1')">
-                            <ion-icon slot="start" name="document"></ion-icon>
-                            <ion-label>File 1-1</ion-label>
-                        </ion-item>
-                    </ion-list>
-                </div>
-            </ion-accordion>
-        </ion-accordion-group>
+        <!-- File System Component -->
+        <app-file-browser [fileTree]="fileTree"></app-file-browser>
     </ion-content>
 </div>

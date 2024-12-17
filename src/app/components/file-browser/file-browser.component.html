@@ -1,0 +1,51 @@
+<ion-accordion-group>
+  <!-- Iterate through the file tree -->
+  <ng-container *ngFor="let key of objectKeys(fileTree)">
+    <!-- Folder -->
+    <ion-accordion *ngIf="!isFile(fileTree[key])" [value]="key">
+      <!-- Folder Header -->
+      <ion-item slot="header">
+        <ion-icon slot="start" name="folder"></ion-icon>
+        <ion-label>{{ key }}</ion-label>
+      </ion-item>
+
+      <!-- Folder Content -->
+      <div slot="content">
+        <ion-list>
+          <!-- Create Folder -->
+          <ion-item>
+            <ion-button expand="block" (click)="createFolder(key)">
+              <ion-icon name="create" slot="start"></ion-icon>
+              Create New Folder
+            </ion-button>
+          </ion-item>
+
+          <!-- Upload File -->
+          <ion-item>
+            <input type="file" (change)="onFileSelected($event, key)" />
+            <ion-button expand="block" (click)="uploadFile(key)">
+              <ion-icon name="cloud-upload" slot="start"></ion-icon>
+              Upload File
+            </ion-button>
+          </ion-item>
+
+          <!-- Existing Files -->
+          <ion-item
+            *ngFor="let subKey of objectKeys(fileTree[key])"
+            button
+            (click)="openFile(key + '/' + subKey)"
+          >
+            <ion-icon slot="start" name="document"></ion-icon>
+            <ion-label>{{ subKey }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+
+    <!-- Root-Level Files -->
+    <ion-item *ngIf="isFile(fileTree[key])" button (click)="openFile(key)">
+      <ion-icon slot="start" name="document"></ion-icon>
+      <ion-label>{{ key }}</ion-label>
+    </ion-item>
+  </ng-container>
+</ion-accordion-group>

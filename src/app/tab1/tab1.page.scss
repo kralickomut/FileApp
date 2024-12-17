@@ -9,3 +9,15 @@ ion-menu {
 .file-system-content {
   --padding-top: 56px; /* Adjust based on your header height */
 }
+
+
+#tab1-content {
+  .content-wrapper {
+    padding-top: 16px; /* Adjust this value as needed */
+  }
+}
+
+
+.ion-padding-top {
+  padding-top: 56px;
+}

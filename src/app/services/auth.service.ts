@@ -3,6 +3,7 @@ import { ApiResult, Token } from '../models/api-results.model';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private tokenKey = 'auth-token'; // Local storage key for JWT
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  private apiUrl: string = 'http://localhost:5143/api/Auth';
+  private apiUrl: string = environment.apiUrl + '/Auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 

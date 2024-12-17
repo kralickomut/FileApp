@@ -6,3 +6,10 @@ export interface ApiResult<T> {
 export interface Token {
   token: string;
 }
+
+export interface File {
+  fileUrl: string,
+  createdOn: string,
+  fileName: string,
+  fileSize: number
+}
