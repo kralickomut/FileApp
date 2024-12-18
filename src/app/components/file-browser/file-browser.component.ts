@@ -77,6 +77,8 @@ export class FileBrowserComponent implements OnChanges, OnInit {
         if (response.success) {
           console.log(`Folder created successfully: ${folderName}`);
           this.historyService.logAction(Number(this.userId),'Created Folder', finalPath, 'folder');
+          alert('Folder created successfully.');
+          window.location.reload();
         } else {
           console.error('Failed to create folder');
         }
@@ -102,7 +104,9 @@ export class FileBrowserComponent implements OnChanges, OnInit {
         {
           console.log(`File uploaded: ${cleanPath}`, response)
           this.historyService.logAction(Number(this.userId), 'Uploaded File', cleanPath, 'file');
-          },
+          alert('File uploaded successfully.');
+          window.location.reload();
+        },
         error: (err) => console.error('File upload failed:', err),
       });
     }
@@ -117,6 +121,8 @@ export class FileBrowserComponent implements OnChanges, OnInit {
         if (response.success) {
           this.historyService.logAction(Number(this.userId), isFile ? 'Deleted File' : 'Deleted Folder', finalPath, isFile ? 'file' : 'folder');
           console.log(`${isFile ? 'File' : 'Folder'} deleted successfully: ${finalPath}`);
+          alert(`${isFile ? 'File' : 'Folder'} deleted successfully.`);
+          window.location.reload();
         } else {
           console.error('Failed to delete:', response);
         }
@@ -138,4 +144,5 @@ export class FileBrowserComponent implements OnChanges, OnInit {
   objectKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
   }
+
 }

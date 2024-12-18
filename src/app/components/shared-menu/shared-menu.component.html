@@ -1,7 +1,15 @@
 <ion-menu content-id="main" menu-id="main-menu" side="start">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Navigation</ion-title>
+      <!-- Title Positioned on the Left -->
+      <ion-title slot="start">Navigation</ion-title>
+
+      <!-- Close Button Positioned on the Right -->
+      <ion-buttons slot="end">
+        <ion-button (click)="closeMenu()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>
